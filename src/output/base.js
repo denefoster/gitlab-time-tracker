@@ -171,8 +171,10 @@ class base {
                     projects[time.project_namespace] += time.seconds;
                     days[dateGrp][time.project_namespace][time.iid] += time.seconds;
 
-                    spent += time.seconds;
-                        
+                    if (Math.sign(time.seconds) === 1) {
+                      spent += time.seconds;
+                    }
+
                     if(free) {
                         spentFree += time.seconds;
                     }
@@ -208,7 +210,7 @@ class base {
         this.projects = _.mapObject(projects, project => this.config.toHumanReadable(project, 'stats'));
         this.stats = {
             'total estimate': this.config.toHumanReadable(totalEstimate, 'stats'),
-            'total spent': this.config.toHumanReadable(totalSpent, 'stats'),
+            'total spent': this.config.toHumanReadable(spent, 'stats'),
             'spent': this.config.toHumanReadable(spent, 'stats'),
             'spent free': this.config.toHumanReadable(spentFree, 'stats'),
         };
@@ -216,7 +218,7 @@ class base {
         this.spent = spent;
         this.spentFree = spentFree;
         this.spentHalfPrice = spentHalfPrice;
-        this.totalSpent = totalSpent;
+        this.totalSpent = spent;
         this.timesWarnings = timesWarnings;
         this.daysNew = daysNew;
     }
